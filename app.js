@@ -1,10 +1,12 @@
 import 'dotenv/config'
 import express from 'express';
+import bodyParser from 'body-parser';
 import routesMascotas from './src/routes/mascotas.js';
 
 const app = express();
 
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/mascotas', routesMascotas);
 
