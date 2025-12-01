@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import Usuario from '../schemas/usuarios.js';
 
 class usuariosModel {
@@ -18,12 +19,12 @@ class usuariosModel {
         return await Usuario.findOne(filtro);
     }
 
-    async update(id, usuario) {
-        return await Usuario.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(id) }, usuario, { new: true });
+    async update(id, Usuario) {
+        return await Usuario.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(id) }, Usuario, { new: true });
     }
 
     async delete(id) {
-        return await Usuario.findByIdAndDelete({ _id: new mongoose.Types.ObjectId(id) });
+        return await Usuario.findOneAndDelete({ _id: new mongoose.Types.ObjectId(id) });
     }
 
 }

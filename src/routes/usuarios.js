@@ -1,5 +1,6 @@
 import express from 'express';
 import usuariosController from '../controllers/usuarios.js';
+import { verificarToken } from '../helpers/autenticacion.js';
 
 const route = express.Router();
 
@@ -8,22 +9,13 @@ const route = express.Router();
 // res = response
 // Datos que queremos enviar al cliente
 
-// GET /mascotas
-// route.get('/', mascotasController.getAll);
-
-// GET /mascotas/:id
-// route.get('/:id', mascotasController.getOne);
-
 // POST /register
 route.post('/register', usuariosController.register);
 
 // POST /login
 route.post('/login', usuariosController.login);
 
-// PUT /mascotas/:id
-// route.put('/:id', mascotasController.update);
-
-// DELETE /mascotas/:id
-// route.delete('/:id', mascotasController.delete);
+// GET /profile
+route.get('/profile',verificarToken, usuariosController.profile);
 
 export default route;

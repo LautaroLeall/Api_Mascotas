@@ -1,12 +1,14 @@
 import usuariosModel from '../models/usuarios.js';
 import bcrypt from 'bcryptjs';
+import { generarToken } from '../helpers/autenticacion.js';
+import jsonwebtoken from 'jsonwebtoken';
 
 class usuariosController {
     constructor() {
 
     }
 
-    async register (req, res) {
+    async register(req, res) {
         try {
             const { nombre, email, telefono, password } = req.body;
             const usuarioExiste = await usuariosModel.getOne({ email });
@@ -41,10 +43,21 @@ class usuariosController {
             if (!passwordMatch) {
                 return res.status(409).json({ error: 'La contraseña no es correcta' });
             }
+            const token = generarToken(email);
 
-            return res.status(200).json({ message: 'Login exitoso' });
+            return res.status(200).json({ message: 'Login exitoso', token });
         }
         catch (e) {
+            res.status(500).send(e);
+        }
+    }
+
+    async profile(req, res) {
+        try {
+            const data = await usuariosModel.getOne({ email: req.emailConectado });
+
+            res.status(201).json(data);
+        } catch (e) {
             res.status(500).send(e);
         }
     }
