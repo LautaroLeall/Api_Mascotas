@@ -16,6 +16,6 @@ route.post('/register', usuariosController.register);
 route.post('/login', usuariosController.login);
 
 // GET /profile
-route.get('/profile',verificarToken, usuariosController.profile);
+route.get('/profile', verificarToken, usuariosController.profile);
 
 export default route;
