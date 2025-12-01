@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import express from 'express';
 import bodyParser from 'body-parser';
+import dbClient from './src/config/dbClient.js';
 import routesMascotas from './src/routes/mascotas.js';
 
 const app = express();
@@ -15,5 +16,10 @@ try {
 
     app.listen(PORT, () => console.log(`Servidor activo en el puerto http://localhost:${PORT}`));
 } catch (e) {
-    console.error('Error al iniciar el servidor:', e);
+    console.error(e);
 }
+
+process.on('SIGINT', async () => {
+    dbClient.cerrarConexion();
+    process.exit(0);
+});
