@@ -1,5 +1,6 @@
 import express from 'express';
 import mascotasController from '../controllers/mascotas.js';
+import { verificarToken } from '../helpers/autenticacion.js';
 
 const route = express.Router();
 
@@ -8,19 +9,19 @@ const route = express.Router();
 // res = response
 // Datos que queremos enviar al cliente
 
-// GET /mascotas
+// GET /pets
 route.get('/', mascotasController.getAll);
 
-// GET /mascotas/:id
+// GET /pets/:id
 route.get('/:id', mascotasController.getOne);
 
-// POST /mascotas
+// POST /pets
 route.post('/', mascotasController.create);
 
-// PUT /mascotas/:id
-route.put('/:id', mascotasController.update);
+// PUT /pets/:id
+route.put('/:id', verificarToken, mascotasController.update);
 
-// DELETE /mascotas/:id
-route.delete('/:id', mascotasController.delete);
+// DELETE /pets/:id
+route.delete('/:id', verificarToken, mascotasController.delete);
 
 export default route;
