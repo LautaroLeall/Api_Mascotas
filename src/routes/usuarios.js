@@ -18,4 +18,7 @@ route.post('/login', usuariosController.login);
 // GET /profile
 route.get('/profile', verificarToken, usuariosController.profile);
 
+// GET /misMascotas
+route.get('/:id/mismascotas', verificarToken, usuariosController.misMascotas);
+
 export default route;

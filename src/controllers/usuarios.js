@@ -1,17 +1,17 @@
+import { generarToken } from '../helpers/autenticacion.js';
 import usuariosModel from '../models/usuarios.js';
 import bcrypt from 'bcryptjs';
-import { generarToken } from '../helpers/autenticacion.js';
-import jsonwebtoken from 'jsonwebtoken';
+// import jsonwebtoken from 'jsonwebtoken';
 
 class usuariosController {
     constructor() {
-
     }
 
     async register(req, res) {
         try {
             const { nombre, email, telefono, password } = req.body;
             const usuarioExiste = await usuariosModel.getOne({ email });
+
             if (usuarioExiste) {
                 return res.status(409).json({ error: 'El usuario ya existe' });
             }
@@ -54,7 +54,26 @@ class usuariosController {
 
     async profile(req, res) {
         try {
+            console.log(req.emailConectado);
+
             const data = await usuariosModel.getOne({ email: req.emailConectado });
+
+            res.status(201).json(data);
+        } catch (e) {
+            res.status(500).send(e);
+        }
+    }
+
+    async misMascotas(req, res) {
+        try {
+            const { id } = req.params;
+            const usuarioExiste = await usuariosModel.getOneById(id);
+
+            if (!usuarioExiste) {
+                return res.status(409).json({ error: 'El usuario no existe' });
+            }
+
+            const data = await usuariosModel.getMisMascotas(id);
 
             res.status(201).json(data);
         } catch (e) {
