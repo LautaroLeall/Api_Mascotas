@@ -18,6 +18,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// para ver la documentación de la API
+// localhost:5100/doc 
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocumentation));
 
 app.use('/pets', routesMascotas);
