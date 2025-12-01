@@ -1,5 +1,6 @@
 // import { ObjectId } from 'mongodb';
 // import dbClient from '../config/dbClient.js';
+import mongoose from 'mongoose';
 import Mascota from '../schemas/mascotas.js';
 
 class mascotasModel {
