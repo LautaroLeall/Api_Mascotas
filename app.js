@@ -1,11 +1,17 @@
-import 'dotenv/config'
+import 'dotenv/config';
 import express from 'express';
 import bodyParser from 'body-parser';
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocumentation from './swagger.json' assert { type: "json" };
+import fs from 'fs';
+
 import dbClient from './src/config/dbClient.js';
 import routesUsuarios from './src/routes/usuarios.js';
 import routesMascotas from './src/routes/mascotas.js';
+
+// Cargar Swagger JSON manualmente
+const swaggerDocumentation = JSON.parse(
+    fs.readFileSync('./swagger.json', 'utf8')
+);
 
 const app = express();
 
@@ -19,8 +25,9 @@ app.use('/users', routesUsuarios);
 
 try {
     const PORT = process.env.PORT || 3000;
-
-    app.listen(PORT, () => console.log(`Servidor activo en el puerto http://localhost:${PORT}`));
+    app.listen(PORT, () =>
+        console.log(`Servidor activo en http://localhost:${PORT}`)
+    );
 } catch (e) {
     console.error(e);
 }
