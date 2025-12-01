@@ -24,11 +24,17 @@ const mascotaSchema = new mongoose.Schema({
     },
     descripcion: {
         type: String,
-        // required: true
+        // required: true,
+        maxLength: 100
     },
     adoptado: {
         type: Boolean,
-        required: true
+        default: false
+    },
+    adoptadoPor: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'usuarios',
+        default: null
     }
 }, { timestamps: true });
 

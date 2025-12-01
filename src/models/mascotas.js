@@ -2,6 +2,7 @@
 // import dbClient from '../config/dbClient.js';
 import mongoose from 'mongoose';
 import Mascota from '../schemas/mascotas.js';
+import Usuario from '../schemas/usuarios.js';
 
 class mascotasModel {
 
@@ -40,6 +41,27 @@ class mascotasModel {
         return await Mascota.findByIdAndDelete({ _id: new mongoose.Types.ObjectId(id) });
     }
 
+    async adoptar(mascotaId, usuarioId) {
+        const usuario = Usuario.findById(usuarioId);
+
+        if (!usuario) {
+            throw new Error('Usuario adoptante no encontrado');
+        }
+
+        const mascota = await Mascota.findByAndUpdate(
+            mascotaId,
+            {
+                adoptado: true,
+                adoptadoPor: usuarioId
+            }
+        );
+
+        if (!mascota) {
+            throw new Error('Mascota a adoptar no encontrada');
+        }
+
+        return mascota;
+    }
 }
 
 export default new mascotasModel();
