@@ -24,4 +24,7 @@ route.put('/:id', verificarToken, mascotasController.update);
 // DELETE /pets/:id
 route.delete('/:id', verificarToken, mascotasController.delete);
 
+// POST /pets/adoptar/:id
+route.post('/:mascotaId/adoptar', verificarToken, mascotasController.adoptar);
+
 export default route;

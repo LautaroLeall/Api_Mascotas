@@ -57,6 +57,23 @@ class mascotasController {
             res.status(500).send(e);
         }
     }
+
+    async adoptar(req, res) {
+        try {
+            const { mascotaId } = req.params;
+            const { usuarioId } = req.body;
+
+            if (!usuarioId) {
+                return res.status(400).json({ mensaje: 'Se requiere el id del usuario adoptante' });
+            }
+
+            const data = await mascotasModel.adoptar(mascotaId, usuarioId);
+
+            res.status(201).json(data);
+        } catch (e) {
+            res.status(500).send(e);
+        }
+    }
 }
 
 export default new mascotasController();
