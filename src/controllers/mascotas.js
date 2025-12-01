@@ -2,12 +2,21 @@ import mascotasModel from '../models/mascotas.js';
 
 class mascotasController {
     constructor() {
-
     }
 
     async create(req, res) {
+        const { nombre, tipo, raza, edad, descripcion, adoptado, adoptadoPor } = req.body;
+
         try {
-            const data = await mascotasModel.create(req.body);
+            const data = await mascotasModel.create({
+                nombre,
+                tipo,
+                raza,
+                edad,
+                descripcion,
+                adoptado,
+                adoptadoPor
+            });
 
             res.status(201).json(data);
         } catch (e) {
@@ -16,9 +25,20 @@ class mascotasController {
     }
 
     async update(req, res) {
+        const { nombre, tipo, raza, edad, descripcion, adoptado, adoptadoPor } = req.body;
+
         try {
             const { id } = req.params;
-            const data = await mascotasModel.update(id, req.body);
+            const data = await mascotasModel.update(
+                id, {
+                nombre,
+                tipo,
+                raza,
+                edad,
+                descripcion,
+                adoptado,
+                adoptadoPor
+            });
 
             res.status(201).json(data);
         } catch (e) {
@@ -71,7 +91,7 @@ class mascotasController {
 
             res.status(201).json(data);
         } catch (e) {
-            res.status(500).send(e);
+            res.status(500).json({ mensaje: e.message });
         }
     }
 }

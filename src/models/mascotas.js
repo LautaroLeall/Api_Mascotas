@@ -42,13 +42,23 @@ class mascotasModel {
     }
 
     async adoptar(mascotaId, usuarioId) {
-        const usuario = Usuario.findById(usuarioId);
+        const mascota = await Mascota.findById(mascotaId);
+
+        if (!mascota) {
+            throw new Error('Mascota a adoptar no encontrada');
+        }
+
+        if (mascota.adoptado) {
+            throw new Error('La Mascota ya ha sido adoptada');
+        }
+
+        const usuario = await Usuario.findById(usuarioId);
 
         if (!usuario) {
             throw new Error('Usuario adoptante no encontrado');
         }
 
-        const mascota = await Mascota.findByAndUpdate(
+        const mascotaAdoptada = await Mascota.findByIdAndUpdate(
             mascotaId,
             {
                 adoptado: true,
@@ -56,11 +66,7 @@ class mascotasModel {
             }
         );
 
-        if (!mascota) {
-            throw new Error('Mascota a adoptar no encontrada');
-        }
-
-        return mascota;
+        return mascotaAdoptada;
     }
 }
 

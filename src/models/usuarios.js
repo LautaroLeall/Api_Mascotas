@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Usuario from '../schemas/usuarios.js';
+import Mascota from '../schemas/mascotas.js';
 
 class usuariosModel {
 
@@ -25,6 +26,16 @@ class usuariosModel {
 
     async delete(id) {
         return await Usuario.findOneAndDelete({ _id: new mongoose.Types.ObjectId(id) });
+    }
+
+    async getMisMascotas(id) {
+        const filtro = {
+            adoptadoPor: id
+        }
+
+        const mascotas = await Mascota.find(filtro);
+
+        return mascotas;
     }
 
 }
