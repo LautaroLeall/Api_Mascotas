@@ -32,13 +32,13 @@ npm install
 
 ## 🔐 Variables de Entorno `.env`
 
-Configurar las siguientes variables:
+*Configurar las siguientes variables:*
 
-PORT=5100
-USER_DB =lautaroleal4_db_user
-PASSWORD_DB =Zh75BaFSL2R6VoVp
-SERVER_DB =adopcion.7b8wicq.mongodb.net
-DATABASE_NAME =adopcion
+- **MONGO_URI**: URI de la base de datos
+- **MONGO_DB**: Nombre de la base de datos
+- **JWT_SECRET**: Secreto para JWT
+- **JWT_EXPIRATION**: Expiración de JWT
+- **PORT**: Puerto del servidor
 
 ---
 
@@ -47,7 +47,8 @@ DATABASE_NAME =adopcion
 Iniciar el proyecto:
 
 ```bash
-npm start
+node express.js
+node app.js
 ```
 
 - Servidor disponible en:
